@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'applications/top'
+  # get 'applications/top'
   get 'applications/menu'
   get 'applications/place'
   get 'applications/list'
