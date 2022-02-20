@@ -1,0 +1,21 @@
+version: '3' # docker-compose.ymlのフォーマットバージョン
+services:
+  web: # Railsのコンテナ設定
+    build: . # docker-compose.ymlと同じディレクトリにあるdockerファイルを元にイメージを作成して使用することを意味している。
+    command: bundle exec rails s -p 3000 -b '0.0.0.0' # コンテナを起動した時にデフォルトで実行されるコマンド。TailsのWebサーバを起動するコマンドを記載。
+    volumes: # PC上のディレクトリをコンテナの/appディレクトリにマウント
+      - .:/app
+    ports:
+      - 3000:3000 # コンテナの外部に3000番ポートを公開。コロンの左側がコンテナ外に公開するポート番号で、コロンから右側が、コンテナ内で転送されるポート番号になります。
+    depends_on:
+      - db # Railsが起動する前にdbサービス、すなわちMySQLサーバが先に起動するように設定
+    tty: true # Railsでplyを使用してデバッグする際に必要な為、設定しています
+    stdin_open: true # Railsでplyを使用してデバッグする際に必要な為、設定しています
+  db: # MySQLサーバのコンテナ設定
+    image: mysql:8.0 # MySQLの8.0を使用
+    volumes:
+      - db-volume:/var/lib/mysql # db-volumeという名前でPC上に作成した領域をコンテナの/var/lib/mysqlディレクトリにマウント。これを設定しない場合、データベースのデータは、直にコンテナ上に保存されますが、コンテナが削除された場合には、データも一緒に消えてしまいます。
+    environment: # コンテナに設定する環境変数を定義しています。環境変数とはOS上で保持される変数のことで、ここで設定しているMYSQL_ROOT_PASSWORDは、MySQLのrootユーザのパスワードを設定するために使用しています。
+      MYSQL_ROOT_PASSWORD: password
+volumes:
+  db-volume:

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title><%= full_title(yield(:title)) %></title>
+    <meta name="description" content="Webページの説明">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag    'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'  %>
+    <%= stylesheet_link_tag    'cation', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%# <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> %>
+    <script type="text/javascript" src="footerFixed.js"></script>
+    <%= javascript_include_tag 'cation', 'data-turbolinks-track': 'reload' %>
+
+</head>
+
+<body>
+    <%= yield %>
+</body>
+
+</html>
